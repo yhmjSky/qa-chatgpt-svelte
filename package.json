@@ -12,8 +12,6 @@
 		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"devDependencies": {
-		"@vercel/analytics": "^0.1.11",
-		"@vercel/examples-ui": "^1.0.5",
 		"@skeletonlabs/skeleton": "^1.1.0",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/adapter-vercel": "^2.3.0",
@@ -40,7 +38,6 @@
 		"svelte-preprocess-markdown": "^2.7.3",
 		"tailwindcss": "^3.2.7",
 		"tslib": "^2.4.1",
-		"turbo": "^1.8.3",
 		"typescript": "^4.9.3",
 		"vite": "^4.0.0",
 		"vitest": "^0.25.3"
