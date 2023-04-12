@@ -29,7 +29,6 @@ export const POST: RequestHandler = async ({ request }) => {
     const prompt =
       '你是一个问答助手，请用中文回答我的问题';
 
-
     const messages = [
       { role: 'system', content: prompt },
       ...reqMessages
