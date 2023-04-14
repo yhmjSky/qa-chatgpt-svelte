@@ -1,6 +1,13 @@
+import { CollectPrompt } from '$lib/stores/QaEmbedding';
 import type { ChatCompletionRequestMessage } from 'openai';
 import { SSE } from 'sse.js';
 import { get, writable } from 'svelte/store';
+
+import type { Config } from '@sveltejs/adapter-vercel';
+export const config: Config = {
+  runtime: 'edge'
+};
+
 
 export interface ChatTranscript {
   messages: ChatCompletionRequestMessage[];
@@ -9,7 +16,7 @@ export interface ChatTranscript {
 
 const { subscribe, update, ...store } = writable<ChatTranscript>({
   messages: [
-    { role: 'assistant', content: 'Hello, I am your virtual assistant. How can I help you?' }
+    { role: 'assistant', content: '您好，我是酒店智能问答助手，请问有需要帮助的吗?' }
   ],
   chatState: 'idle'
 });
@@ -17,11 +24,20 @@ const { subscribe, update, ...store } = writable<ChatTranscript>({
 const set = async (query: string) => {
   updateMessages(query, 'user', 'loading');
 
+  // the function in QaEmbedding.ts
+  const prompt = await CollectPrompt(query)
+  
+  let tempMessage: ChatCompletionRequestMessage[] = [
+    { role: 'system', content: prompt},
+    { role: 'user', content: query }
+  ]
+
   const eventSource = new SSE('/api/chat', {
     headers: {
       'Content-Type': 'application/json'
     },
-    payload: JSON.stringify({ messages: get(chatMessages).messages })
+    payload: JSON.stringify({ messages: tempMessage })
+    // payload: JSON.stringify({ messages: get(chatMessages).messages })
   });
 
   eventSource.addEventListener('error', handleError);
@@ -36,7 +52,7 @@ const replace = (messages: ChatTranscript) => {
 const reset = () =>
   store.set({
     messages: [
-      { role: 'assistant', content: 'Hello, I am your virtual assistant. How can I help you?' }
+      { role: 'assistant', content: '您好，我是酒店智能问答助手，请问有需要帮助的吗?' }
     ],
     chatState: 'idle'
   });
@@ -71,6 +87,7 @@ const streamMessage = (e: MessageEvent) => {
     handleError(err);
   }
 };
+
 
 export const chatMessages = { subscribe, set, update, reset, replace };
 export const answer = writable<string>('');

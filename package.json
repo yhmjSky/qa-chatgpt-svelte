@@ -42,5 +42,11 @@
 		"vite": "^4.0.0",
 		"vitest": "^0.25.3"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@supabase/supabase-js": "^2.20.0",
+		"d3-dsv": "2",
+		"dotenv": "^16.0.3",
+		"langchain": "^0.0.54"
+	}
 }

@@ -3,8 +3,8 @@
   import DOMPurify from 'isomorphic-dompurify';
   import type { ChatCompletionRequestMessageRoleEnum } from 'openai';
   import { onMount } from 'svelte';
-  import robot_avatar from '$lib/assets/openai.png';
-	import julio_avatar from '$lib/assets/ava.jpeg';
+  import openai_avatar from '$lib/assets/openai.png';
+	import ava_avatar from '$lib/assets/ava.jpeg';
 
   export let type: ChatCompletionRequestMessageRoleEnum;
   export let message: string = '';
@@ -37,14 +37,14 @@
   <section class={classSet[type]}>
 		{#if type === 'user'}
     <div class="avatext">
-      <p class="text-xs px-2">yours</p>
-      <img class="avatar" src={julio_avatar} alt="avatar" />
+      <p class="text-xs px-2">user</p>
+      <img class="avatar" src={ava_avatar} alt="avatar" />
     </div>
 
 		{:else}
     <div class="avatext">    
-      <img class="avatar" src={robot_avatar} alt="avatar" />
-      <p class="text-xs px-2">assistant</p>
+      <img class="avatar" src={openai_avatar} alt="avatar" />
+      <p class="text-xs px-2">问答助手</p>
     </div>
 		{/if}
 	</section>

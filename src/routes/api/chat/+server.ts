@@ -26,19 +26,24 @@ export const POST: RequestHandler = async ({ request }) => {
     }
 
 
+    // console.log(reqMessages)
     const prompt =
-      '你是一个问答助手，请用中文回答我的问题';
-
-
+      'answer with chinese';
+    // const messages = [
+    //   { role: 'system', content: prompt },
+    //   ...reqMessages
+    // ];
     const messages = [
       { role: 'system', content: prompt },
       ...reqMessages
     ];
 
+    console.log(messages)
+
     const chatRequestOpts = {
       model: 'gpt-3.5-turbo',
       messages,
-      temperature: 0.9,
+      temperature: 0.3,
       stream: true
     };
 
